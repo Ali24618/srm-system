@@ -7,8 +7,8 @@ import Doctors from './components/doctors';
 import Users from './components/users';
 import Category from './components/category';
 import Adddoc from './components/adddoc';
-import Doc from './components/doclist';
 import Doclist from './components/doclist';
+import AddGroup from './components/add_group';
 
 function App() {
   return (
@@ -23,6 +23,11 @@ function App() {
           <Route path="/category" element={<Category />} />
           <Route path="/adddoc" element={<Adddoc />} />
           <Route path="/doclist/:id" element={<Doclist />} />
+          <Route path="/add_group/:id" element={<AddGroup />} />
+          Сделать типы заявок
+          Сделать отправку готовых сообщений по группам
+          Создавать группы внутри категорий что бы id сохранялись
+          {/* Улучшить верстку */}
         </Routes>
       </BrowserRouter>
     </div>

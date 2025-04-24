@@ -15,7 +15,6 @@ const Adddoc = () => {
     const [type, setType] = useState("");
     const [text, setText] = useState("");
 
-
     const famous = async () => {
         let person = await axios({
             method: "get",

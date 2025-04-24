@@ -133,8 +133,8 @@ const Category = () => {
                                     {category.length ? (
                                         category.map(i => (
                                             <tr key={i.id}>
-                                                <td>{i.id}</td>
-                                                <td>{i.name}</td>
+                                                <td><a href={"/add_group/" + i.id} className="href text-primary">{i.id}</a></td>
+                                                <td><a href={"/add_group/" + i.id} className="href text-primary">{i.name}</a></td>
                                                 <td><i class="fa-solid fa-trash text-danger" onClick={() => Delete(i.id)}></i></td>
                                             </tr>
                                         ))

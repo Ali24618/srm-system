@@ -6,6 +6,9 @@
   background-color: rgb(0, 123, 199);
   color: white;
 }
+.color-2{
+  color : rgb(0, 123, 199);
+}
 
 html {
   overflow-x: hidden;
@@ -21,6 +24,25 @@ html {
 .pos {
   position: absolute;
   z-index: 10;
+}
+
+.text-with-image {
+  background-image: url('https://medongroup-irk.ru/wp-content/uploads/sites/10/2024/07/istock-1272621878-scaled-2000x1334-1.jpg');
+  width: 1750px;
+  background-size: cover;
+  margin-left: -20px;
+  height: 400px;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .text-with-image {
+    height: 400px; /* Уменьшаем высоту */
+    background-size: contain; /* Делаем так, чтобы картинка полностью помещалась */
+    background-repeat: no-repeat;
+  }
 }
 
 .block {

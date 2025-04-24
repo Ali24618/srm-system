@@ -97,122 +97,190 @@ const Users = () => {
     return (
         <>
             {data != null ?
-                <div className="container-fluid mt-4">
-                    <div className="row justify-content-center">
-                        {show ? (
-                            <div className="col-12 text-center pos p-5">
-                                <h1 className="block">Успешно</h1>
-                            </div>
-                        ) : (
-                            <div></div>
-                        )}
+                <div className="container-fluid py-4">
+                    {/* Уведомление об успешном сохранении */}
+                    {show && (
+                        <div className="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                            <strong>Успешно!</strong> Данные были сохранены.
+                            <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    )}
+
+                    {/* Карточка клиента */}
+                    <div className="row justify-content-center mb-5">
                         <div className="col-md-8 col-lg-6">
-                            <div className="card shadow-lg">
-                                <div className="card-header text-center bg-primary text-white">
-                                    <h2>Клиент <b>{data.name}</b></h2>
+                            <div className="card shadow-sm">
+                                <div className="card-header bg-light">
+                                    <h4 className="mb-0">Клиент: {data.name}</h4>
                                 </div>
                                 <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            Обработанно
-                                            <div class="checkbox-con">
-                                                <input checked={processlng} value={processlng} onChange={(e) => setProcesslng(e.target.checked)} id="checkbox" type="checkbox" />
+                                    <div className="row mb-4">
+                                        <div className="col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                            <div className="form-check form-switch">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="processStatus"
+                                                    checked={processlng}
+                                                    onChange={(e) => setProcesslng(e.target.checked)}
+                                                />
+                                                <label className="form-check-label" htmlFor="processStatus">Обработано</label>
                                             </div>
-                                        </div>
-                                        <div className="col-6 text-center">
-                                            <button className="btn btn-primary rounded-0 shadow-lg" onClick={scrollToBottom}>Перенаправить</button>
                                         </div>
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label">Имя</label>
-                                        <input type="text" onChange={(e) => setName(e.target.value)} className="form-control border-0 spe" placeholder={data.name} value={name} />
+                                        <input
+                                            type="text"
+                                            onChange={(e) => setName(e.target.value)}
+                                            className="form-control"
+                                            placeholder={data.name}
+                                            value={name}
+                                        />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label">Фамилия</label>
-                                        <input type="text" onChange={(e) => setLastname(e.target.value)} className="form-control border-0 spe" placeholder={data.lastname} value={lastname} />
+                                        <input
+                                            type="text"
+                                            onChange={(e) => setLastname(e.target.value)}
+                                            className="form-control"
+                                            placeholder={data.lastname}
+                                            value={lastname}
+                                        />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label">Отчество</label>
-                                        <input onChange={(e) => setSurname(e.target.value)} type="text" className="form-control border-0 spe" placeholder={data.surname} value={surname} />
+                                        <input
+                                            type="text"
+                                            onChange={(e) => setSurname(e.target.value)}
+                                            className="form-control"
+                                            placeholder={data.surname}
+                                            value={surname}
+                                        />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label">Номер</label>
-                                        <input onChange={(e) => setNumber(e.target.value)} type="text" className="form-control border-0 spe" placeholder={data.number} value={number} />
+                                        <input
+                                            type="text"
+                                            onChange={(e) => setNumber(e.target.value)}
+                                            className="form-control"
+                                            placeholder={data.number}
+                                            value={number}
+                                        />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label">Почта</label>
-                                        <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control border-0 spe" placeholder={data.email} value={email} />
+                                        <input
+                                            type="email"
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="form-control"
+                                            placeholder={data.email}
+                                            value={email}
+                                        />
                                     </div>
-                                    <div className="mb-3">
+                                    <div className="mb-4">
                                         <label className="form-label">Описание</label>
-                                        <textarea className="form-control spe" value={description} onChange={(e) => setDescription(e.target.value)} rows="3" placeholder={data.description === null ? "Введите текст..." : data.description}></textarea>
+                                        <textarea
+                                            className="form-control"
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            rows="3"
+                                            placeholder={data.description === null ? "Введите текст..." : data.description}
+                                        ></textarea>
                                     </div>
-                                    <button onClick={Puut} type="submit" className="btn btn-primary w-100">Сохранить</button>
+                                    <button
+                                        onClick={Puut}
+                                        type="submit"
+                                        className="btn btn-primary w-100"
+                                    >
+                                        Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="row mt-5">
-                        <div className="col-2 mt-5"></div>
-                        <div className="col-8 mt-5">
-                            <select
-                                value={filter}
-                                onChange={e => setFilter(e.target.value)}
-                                className="form-select mt-2 border border-dark">
-                                <option value="">Все категории</option>
-                                {category.map(i => (
-                                    <option key={i.id} value={i.name}>{i.name}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3"></div>
-                        <div className="col-6 text-center p-3">Нажмите на номер на который вы хотите отправить данные клиента</div>
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-2"></div>
-                        <div className="col-lg-8">
-                            <table className="table table-bordered border border-dark mt-3">
-                                <div className="responsive-table">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Имя</th>
-                                                <th>Фамилия</th>
-                                                <th>Тип</th>
-                                                <th>WhatsApp</th>
-                                                <th>Номер</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {filteredData.length ? (
-                                                filteredData.map(i => (
-                                                    <tr key={i.id}>
-                                                        <td data-label="ID"><a href={`/doclist/${i.id}`} className="href">{i.id}</a></td>
-                                                        <td data-label="Имя"><a href={`/doclist/${i.id}`} className="href">{i.name}</a></td>
-                                                        <td data-label="Фамилия">{i.lastname}</td>
-                                                        <td data-label="Тип">{i.type}</td>
-                                                        <td data-label="Номер">{i.numberwhat}</td>
-                                                        <td data-label="WhatsApp">
-                                                            <a href={`https://web.whatsapp.com/send?phone=${i.number}&text=${encodeURIComponent(
-                                                                `Имя: ${data.name}\nФамилия: ${data.lastname}\nОтчество: ${data.surname}\nНомер: ${data.number}\nПочта: ${data.email}\nОписание: ${data.description}`
-                                                            )}`} target="_blank" rel="noopener noreferrer">
-                                                                {i.number}
-                                                            </a>
+
+                    {/* Секция перенаправления */}
+                    <div className="row justify-content-center mb-2" id="redirect-section">
+                        <div className="col-md-8">
+                            <div className="card shadow-sm">
+                                <div className="card-header bg-light">
+                                    <h5 className="mb-0">Выберите получателя</h5>
+                                </div>
+                                <div className="card-body">
+                                    <p className="text-center mb-4">
+                                        Нажмите на номер, на который вы хотите отправить данные клиента
+                                    </p>
+
+                                    <div className="mb-4">
+                                        <select
+                                            value={filter}
+                                            onChange={e => setFilter(e.target.value)}
+                                            className="form-select"
+                                        >
+                                            <option value="">Все категории</option>
+                                            {category.map(i => (
+                                                <option key={i.id} value={i.name}>{i.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="table-responsive">
+                                        <table className="table table-hover">
+                                            <thead className="bg-light">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Имя</th>
+                                                    <th>Фамилия</th>
+                                                    <th>Тип</th>
+                                                    <th>WhatsApp</th>
+                                                    <th>Номер</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {filteredData.length ? (
+                                                    filteredData.map(i => (
+                                                        <tr key={i.id}>
+                                                            <td>
+                                                                <a href={`/doclist/${i.id}`} className="text-decoration-none">
+                                                                    {i.id}
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <a href={`/doclist/${i.id}`} className="text-decoration-none">
+                                                                    {i.name}
+                                                                </a>
+                                                            </td>
+                                                            <td>{i.lastname}</td>
+                                                            <td>{i.type}</td>
+                                                            <td>{i.numberwhat}</td>
+                                                            <td>
+                                                                <a
+                                                                    href={`https://web.whatsapp.com/send?phone=${i.number}&text=${encodeURIComponent(
+                                                                        `Имя: ${data.name}\nФамилия: ${data.lastname}\nОтчество: ${data.surname}\nНомер: ${data.number}\nПочта: ${data.email}\nОписание: ${data.description}`
+                                                                    )}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="btn btn-sm btn-outline-success"
+                                                                >
+                                                                    <i className="fa-brands fa-whatsapp me-1"></i>
+                                                                    {i.number}
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="6" className="text-center py-4 text-muted">
+                                                            Нет данных
                                                         </td>
                                                     </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="6" className="text-center">Нет данных</td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </table>
+                            </div>
                         </div>
                     </div>
                 </div>
