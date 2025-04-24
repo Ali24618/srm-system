@@ -1,24 +1,32 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { domain } from "../config/url";
 
 const Doclist = () => {
-    const ident = localStorage.getItem('ident');
+    const ident = localStorage.getItem('identikay');
     const [data, setData] = useState([]);
+    const [category, setCategory] = useState([]);
     const [name, setName] = useState("");
     const [lastname, setLastname] = useState("");
     const [surname, setSurname] = useState("");
     const [number, setNumber] = useState("");
     const [email, setEmail] = useState("");
     const [whatsapp, setWhatsapp] = useState("");
+    const [type, setType] = useState("");
+    const [photo, setPhoto] = useState(null);
     const [show, setShow] = useState(false);
+
+    if (localStorage.getItem('identikay') == null) {
+        window.location.href = '/adminpanelforadmins';
+    }
 
     let param = useParams();
 
     let famous = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/doctorslist/${param.id}`,
+            url: `${domain}/api/doctorslist/${param.id}`,
         })
         if (person != null) {
             if (person.status === 200) {
@@ -27,15 +35,32 @@ const Doclist = () => {
             }
         }
     }
-    const Puut = async () => {        
-        let person = await axios.put(`http://api.com/api/doctorslist/${param.id}`, {
+
+    let categories = async () => {
+        let person = await axios({
+            method: "get",
+            url: `${domain}/api/category`,
+        })
+        console.log('Данные успешно получены', person);
+        if (person != null) {
+            if (person.status == 200) {
+                setCategory(person.data.category)
+                console.log('Данные успешно получены', person);
+            }
+        }
+    }
+
+    const Puut = async () => {
+        let person = await axios.put(`${domain}/api/doctorslist/${param.id}`, {
             name: name || data.name,
             lastname: lastname || data.lastname,
             surname: surname || data.surname,
-            number: number || data.number,
+            number: number || data.number,  
             email: email || data.email,
             numberwhat: whatsapp || data.numberwhat,
+            type: type || data.type,
         });
+
         console.log('Работает запрос');
         if (person.status === 200) {
             console.log('Успешно изменено', person);
@@ -47,6 +72,7 @@ const Doclist = () => {
     };
     useEffect(() => {
         famous();
+        categories();
     }, []);
     return (
         <>
@@ -66,9 +92,14 @@ const Doclist = () => {
                                     <h2>Доктор <b>{data.name}</b></h2>
                                 </div>
                                 <div className="card-body">
-                                <div className="mb-3">
-                                        <label className="form-label">Категория Врача</label>
-                                        <p><b>{data.type}</b></p>
+                                    <div className="mb-3">
+                                        <label htmlFor="select">Выбрать тип врача</label>
+                                        <select className="form-control border border-dark rounded-0" value={type} onChange={(e) => setType(e.target.value)}>
+                                            <option value="">{data.type}</option>
+                                            {category.map(i => (
+                                                <option key={i.id} value={i.name}>{i.name}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label">Имя</label>
@@ -101,7 +132,7 @@ const Doclist = () => {
                     </div>
                 </div>
                 :
-                <>s</>
+                <>Нет данных</>
             }
         </>
     )

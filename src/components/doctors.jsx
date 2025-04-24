@@ -1,18 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { domain } from "../config/url";
 
 const Doctors = () => {
-    const ident = localStorage.getItem('ident');
+    const ident = localStorage.getItem('identikay');
     const [object, setObject] = useState([]);
     const [data, setData] = useState([]);
     const [category, setCategory] = useState([]);
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("");
 
+    if (localStorage.getItem('identikay') == null) {
+        window.location.href = '/adminpanelforadmins';
+    }
+
     const famous = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         });
         const user = person.data.admindentist.find(user => user.id === ident);
         if (user) {
@@ -22,7 +27,7 @@ const Doctors = () => {
     let list = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/doctorslist`,
+            url: `${domain}/api/doctorslist`,
         })
         console.log('Данные успешно получены', person);
         if (person != null) {
@@ -35,7 +40,7 @@ const Doctors = () => {
     let categories = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/category`,
+            url: `${domain}/api/category`,
         })
         console.log('Данные успешно получены', person);
         if (person != null) {
@@ -59,7 +64,7 @@ const Doctors = () => {
         if (pred) {
             let person = await axios({
                 method: "delete",
-                url: `http://api.com/api/doctorslist/`,
+                url: `${domain}/api/doctorslist/`,
                 params: {
                     id: id,
                 },
@@ -77,7 +82,7 @@ const Doctors = () => {
     const User = async () => {
         let response = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         })
         const users = response.data.admindentist;
         const logIn = users.filter(i => i.id === ident);
@@ -109,6 +114,12 @@ const Doctors = () => {
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link" href="/doctors">Список Докторов</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/services">Услуги</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/reviews">Отзывы</a>
                                     </li>
                                 </ul>
                                 <span className="navbar-text">

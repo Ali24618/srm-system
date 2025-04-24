@@ -1,15 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { domain } from "../config/url";
 
 const Admin = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [object, setObject] = useState([]);
 
+    // if (localStorage.getItem('identikay') != null) {
+    //     window.location.href = '/home/6';
+    // }
+
     let famous = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         })
         console.log('Данные успешно получены', person);
         if (person != null) {
@@ -22,12 +27,12 @@ const Admin = () => {
     const LogIn = async () => {
         let response = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         })
         const users = response.data.admindentist;
         const logIn = users.filter(i => i.login === login && i.password === password);
         if (logIn.length > 0) {
-            localStorage.setItem('ident', logIn[0].id);
+            localStorage.setItem('identikay', logIn[0].id);
             window.location.href = `/home/${logIn[0].id}`;
         } else {
             alert('Неправильный пароль или почта')

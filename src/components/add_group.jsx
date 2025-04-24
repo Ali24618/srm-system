@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { domain } from "../config/url";
 
 const AddGroup = () => {
     const [data, setData] = useState([]);
@@ -8,12 +9,16 @@ const AddGroup = () => {
     const [name, setName] = useState("");
     const [link, setLink] = useState("");
 
+    if (localStorage.getItem('identikay') == null) {
+        window.location.href = '/adminpanelforadmins';
+    }
+
     let param = useParams();
 
     let famous = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/category/${param.id}`,
+            url: `${domain}/api/category/${param.id}`,
         })
         if (person != null) {
             if (person.status === 200) {
@@ -23,32 +28,41 @@ const AddGroup = () => {
         }
     }
     let list = async () => {
+        let human = await axios({
+            method: "get",
+            url: `${domain}/api/category/${param.id}`,
+        })
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/groupcategory`,
+            url: `${domain}/api/groupcategory`,
         })
         console.log('Данные успешно получены', person);
         if (person != null) {
-            if (person.status == 200) {
-                setObject(person.data.groupcategory)
-                console.log('Данные успешно получены', person);
+            if (person.status === 200) {
+                const detail = person.data.groupcategory.filter((i) => i.category_name == human.data.category.name);
+                if (detail.length > 0) {
+                    setObject(detail);
+                    console.log('Данные успешно получены 2', detail);
+                } else {
+                    console.log('Нет данных 2');
+                }
             }
         }
     }
     const Ad = async () => {
         let person = await axios({
             method: "post",
-            url: `http://api.com/api/groupcategory`,
+            url: `${domain}/api/groupcategory`,
             params: {
                 name: name,
                 link: link,
                 category_id: param.id,
+                category_name: data.name,
             }
         });
         if (person != null) {
             if (person.status >= 200 && person.status < 300) {
                 console.log('Успешно добалено');
-                console.log('Обновленные данные после добавления:', { name, link });
                 list();
             }
         }

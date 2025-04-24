@@ -6,44 +6,35 @@
   background-color: rgb(0, 123, 199);
   color: white;
 }
-.color-2{
-  color : rgb(0, 123, 199);
+
+.color-2 {
+  color: rgb(0, 123, 199);
 }
 
 html {
   overflow-x: hidden;
 }
-.qwerty{
+
+.qwerty {
   height: 100%;
 }
-.ali:hover{
+
+.ali:hover {
   background-color: rgb(0, 123, 199);
   color: white;
   transition: background-color 0.3s ease-in-out;
-} 
+}
+/* Стилизация для иконки Telegram */
+.tg i {
+  color: #0088cc; /* Цвет Telegram */
+}
+
+
 .pos {
   position: absolute;
   z-index: 10;
 }
 
-.text-with-image {
-  background-image: url('https://medongroup-irk.ru/wp-content/uploads/sites/10/2024/07/istock-1272621878-scaled-2000x1334-1.jpg');
-  width: 1750px;
-  background-size: cover;
-  margin-left: -20px;
-  height: 400px;
-}
-
-
-
-
-@media (max-width: 768px) {
-  .text-with-image {
-    height: 400px; /* Уменьшаем высоту */
-    background-size: contain; /* Делаем так, чтобы картинка полностью помещалась */
-    background-repeat: no-repeat;
-  }
-}
 
 .block {
   background-color: #02c202;
@@ -57,8 +48,39 @@ html {
   top: 11%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0; /* начальное состояние */
+  opacity: 0;
+  /* начальное состояние */
   animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.ins {
+  /* background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5); */
+  color: rgb(160, 5, 113);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.card {
+  transition: transform 0.6s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.01);
+}
+.el-scroll-hidden {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.element-scroll-show {
+  opacity: 1;
+}
+
+.lol{
+  font-family: monospace;
+  width: 40%;
 }
 
 @keyframes fadeIn {
@@ -79,8 +101,8 @@ container {
 }
 
 .spe::placeholder {
-    color: black;
-    font-weight: bold;
+  color: black;
+  font-weight: bold;
 }
 
 .checkbox-con {
@@ -88,9 +110,9 @@ container {
   display: flex;
   align-items: center;
   color: white;
- }
- 
- .checkbox-con input[type="checkbox"] {
+}
+
+.checkbox-con input[type="checkbox"] {
   appearance: none;
   width: 48px;
   height: 27px;
@@ -99,9 +121,9 @@ container {
   background: #f1e1e1;
   position: relative;
   box-sizing: border-box;
- }
- 
- .checkbox-con input[type="checkbox"]::before {
+}
+
+.checkbox-con input[type="checkbox"]::before {
   content: "";
   width: 18px;
   height: 18px;
@@ -113,45 +135,47 @@ container {
   left: 0;
   transform: translate(13%, 15%);
   transition: all 0.3s ease-in-out;
- }
- 
- .checkbox-con input[type="checkbox"]::after {
+}
+
+.checkbox-con input[type="checkbox"]::after {
   content: url("data:image/svg+xml,%3Csvg xmlns='://www.w3.org/2000/svg' width='23' height='23' viewBox='0 0 23 23' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6.55021 5.84315L17.1568 16.4498L16.4497 17.1569L5.84311 6.55026L6.55021 5.84315Z' fill='%23EA0707' fill-opacity='0.89'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M17.1567 6.55021L6.55012 17.1568L5.84302 16.4497L16.4496 5.84311L17.1567 6.55021Z' fill='%23EA0707' fill-opacity='0.89'/%3E%3C/svg%3E");
   position: absolute;
   top: 0;
   left: 20px;
- }
- 
- .checkbox-con input[type="checkbox"]:checked {
+}
+
+.checkbox-con input[type="checkbox"]:checked {
   border: 2px solid #02c202;
   background: #e2f1e1;
- }
- 
- .checkbox-con input[type="checkbox"]:checked::before {
+}
+
+.checkbox-con input[type="checkbox"]:checked::before {
   background: rgba(2, 194, 2, 0.5);
   border: 2px solid #02c202;
   transform: translate(133%, 13%);
   transition: all 0.3s ease-in-out;
- }
- 
- .checkbox-con input[type="checkbox"]:checked::after {
+}
+
+.checkbox-con input[type="checkbox"]:checked::after {
   content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='13' viewBox='0 0 15 13' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14.8185 0.114533C15.0314 0.290403 15.0614 0.605559 14.8855 0.818454L5.00187 12.5L0.113036 6.81663C-0.0618274 6.60291 -0.0303263 6.2879 0.183396 6.11304C0.397119 5.93817 0.71213 5.96967 0.886994 6.18339L5.00187 11L14.1145 0.181573C14.2904 -0.0313222 14.6056 -0.0613371 14.8185 0.114533Z' fill='%2302C202' fill-opacity='0.9'/%3E%3C/svg%3E");
   position: absolute;
   top: 1px;
   left: 6px;
- }
- 
- .checkbox-con label {
+}
+
+.checkbox-con label {
   margin-left: 10px;
   cursor: pointer;
   user-select: none;
- }
- table {
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -164,7 +188,12 @@ th, td {
     white-space: nowrap;
   }
 
-  table, thead, tbody, th, td, tr {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
     display: block;
   }
 

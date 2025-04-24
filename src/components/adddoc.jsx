@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import validator from "validator";
+import { domain } from "../config/url";
 
 const Adddoc = () => {
     const [object, setObject] = useState([]);
-    const ident = localStorage.getItem('ident');
+    const ident = localStorage.getItem('identikay');
     const [category, setCategory] = useState([]);
     const [name, setName] = useState("");
     const [lastname, setLastname] = useState("");
@@ -14,11 +14,23 @@ const Adddoc = () => {
     const [email, setEmail] = useState("");
     const [type, setType] = useState("");
     const [text, setText] = useState("");
+    const [photo, setPhoto] = useState(null);
+
+    if (localStorage.getItem('identikay') == null) {
+        window.location.href = '/adminpanelforadmins';
+    }
+
+    const handlePhotoChange = (e) => {
+        const file = e.target.files[0];  // Берем первое изображение
+        if (file) {
+            setPhoto(URL.createObjectURL(file)); // Сохраняем URL для предпросмотра
+        }
+    };
 
     const famous = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         });
         const user = person.data.admindentist.find(user => user.id === ident);
         if (user) {
@@ -29,7 +41,7 @@ const Adddoc = () => {
     let categories = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/category`,
+            url: `${domain}/api/category`,
         })
         console.log('Данные успешно получены', person);
         if (person != null) {
@@ -45,7 +57,7 @@ const Adddoc = () => {
             if (name && lastname && phone && type) {
                 let person = await axios({
                     method: "post",
-                    url: `http://api.com/api/doctorslist`,
+                    url: `${domain}/api/doctorslist`,
                     params: {
                         name: name,
                         lastname: lastname,
@@ -54,6 +66,7 @@ const Adddoc = () => {
                         numberwhat: whatsapp,
                         type: type,
                         number: phone,
+                        photo: photo,
                     }
                 });
                 if (person != null) {
@@ -70,11 +83,10 @@ const Adddoc = () => {
         }
     };
 
-
     const User = async () => {
         let response = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         })
         const users = response.data.admindentist;
         const logIn = users.filter(i => i.id === ident);
@@ -124,6 +136,15 @@ const Adddoc = () => {
                             <label htmlFor="lastname" className="form-label">Почта</label>
                             <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="Email врача" className="form-control border border-dark rounded-0" />
                         </div>
+                        <div className="mt-3">
+                            <label htmlFor="photo" className="form-label">Фото доктора</label>
+                            <input type="file" className="form-control" accept="image/*" onChange={handlePhotoChange} />
+                        </div>
+                        {photo && (
+                            <div className="mt-3">
+                                <img src={photo} alt="Doctor" className="img-thumbnail" style={{ width: '200px', height: '200px', objectFit: 'cover' }} />
+                            </div>
+                        )}
                         <p className="mt-3 text-danger"><b>{text}</b></p>
                         <div className="text-center mt-3">
                             <button className="btn btn-success rounded-0 form-control" onClick={Ad}>Добавить</button>

@@ -1,18 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { domain } from "../config/url";
 
 const Home = () => {
-    const ident = localStorage.getItem('ident');
+    const ident = localStorage.getItem('identikay');
     const [object, setObject] = useState([]);
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("");
     const [datefilter, setDateFilter] = useState("");
 
+    if (localStorage.getItem('identikay') == null) {
+        window.location.href = '/adminpanelforadmins';
+    }
+
+    // console.log(object); 
+    // console.log(object?.id); 
+
     const famous = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         });
         const user = person.data.admindentist.find(user => user.id === ident);
         if (user) {
@@ -23,7 +31,7 @@ const Home = () => {
     let list = async () => {
         let person = await axios({
             method: "get",
-            url: `http://api.com/api/usersdentist`,
+            url: `${domain}/api/usersdentist`,
         })
         if (person != null) {
             if (person.status == 200) {
@@ -37,7 +45,7 @@ const Home = () => {
         if (pred) {
             let person = await axios({
                 method: "delete",
-                url: `http://api.com/api/usersdentist/`,
+                url: `${domain}/api/usersdentist/`,
                 params: {
                     id: id,
                 },
@@ -103,7 +111,7 @@ const Home = () => {
     const User = async () => {
         let response = await axios({
             method: "get",
-            url: `http://api.com/api/admindentist`,
+            url: `${domain}/api/admindentist`,
         })
         const users = response.data.admindentist;
         const logIn = users.filter(i => i.id === ident);
@@ -134,6 +142,12 @@ const Home = () => {
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link" href="/doctors">Список Докторов</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/services">Услуги</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/reviews">Отзывы</a>
                                     </li>
                                 </ul>
                                 <span className="navbar-text">
@@ -189,26 +203,30 @@ const Home = () => {
                                 </thead>
                                 <tbody>
                                     {filteredData.length ? (
-                                        filteredData.filter((i) => i.agreement === "true").map((i) => (
-                                            <tr key={i.id}>
-                                                <td><a href={"/users/" + i.id} className="href">{i.id}</a></td>
-                                                <td><a href={"/users/" + i.id} className="href">{i.name}</a></td>
-                                                <td>{i.lastname}</td>
-                                                <td>{i.surname}</td>
-                                                <td>{i.number}</td>
-                                                <td>{i.email}</td>
-                                                <td>{i.created_date}</td>
-                                                <td className="text-center">{i.agreement === "true" ? "✓" : "✗"}</td>
-                                                <td>{i.processlng === null ? "Не обработано" : "Обработано"}</td>
-                                                <td><i class="fa-solid fa-trash text-danger" onClick={() => Delete(i.id)}></i></td>
-                                            </tr>
-                                        ))
+                                        filteredData
+                                            .filter((i) => i.agreement === "true")
+                                            .reverse() 
+                                            .map((i) => (
+                                                <tr key={i.id}>
+                                                    <td><a href={"/users/" + i.id} className="href">{i.id}</a></td>
+                                                    <td><a href={"/users/" + i.id} className="href">{i.name}</a></td>
+                                                    <td>{i.lastname}</td>
+                                                    <td>{i.surname}</td>
+                                                    <td>{i.number}</td>
+                                                    <td>{i.email}</td>
+                                                    <td>{i.created_date}</td>
+                                                    <td className="text-center">{i.agreement === "true" ? "✓" : "✗"}</td>
+                                                    <td>{i.processlng === null ? "Не обработано" : "Обработано"}</td>
+                                                    <td><i className="fa-solid fa-trash text-danger" onClick={() => Delete(i.id)}></i></td>
+                                                </tr>
+                                            ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="7" className="text-center">Нет данных</td>
+                                            <td colSpan="10" className="text-center">Нет данных</td>
                                         </tr>
                                     )}
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
